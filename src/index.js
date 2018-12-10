@@ -2,13 +2,15 @@ import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store/index";
-import { addArticle } from "./actions/index";
+import { AppContainer } from 'react-hot-loader';
 
 import App from './containers/App';
-
+const rootElement = document.getElementById('root');
 render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById("root")
+    <AppContainer>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </AppContainer>,
+    rootElement
 );

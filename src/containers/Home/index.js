@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addArticle } from "../../actions/index";
+import * as Actions from "../../actions/index";
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
 
@@ -15,11 +15,12 @@ class Homepage extends Component{
     }
 
     handleChange(value){
-        this.props.changePrincipal({ principal });
-        this.setState({ principal: value });
+        dispatch(changePrincipal(value));
+       /*  this.props.changePrincipal({ principal });
+        this.setState({ principal: value }); */
     }
 
-    render(){
+    render(state, actions){
         const { principal } = this.props;
         const values = {
           min: 100,
@@ -44,16 +45,16 @@ class Homepage extends Component{
                         <div className="calculator-interface">
                         <h2>Simulate your loan</h2>
                         <div className="loan-amount">
-                            <h2 className="amout">{formatMoney(principal)}</h2>
+                            <h2 className="amout">{`€ ${state.principal}`}</h2>
                             <h3 className="inner-title">Amount required</h3>
                             <Slider
-                            min={values.min}
-                            max={values.max}
-                            step={values.step}
-                            value={principal}
-                            format={formatMoney}
-                            labels={horizontalLabels}
-                            onChange={this.handleChange}
+                                min={values.min}
+                                max={values.max}
+                                step={values.step}
+                                value={state.principal}
+                                format={`€ ${state.principal}`}
+                                labels={horizontalLabels}
+                                onChange={actions.changePrincipal()}
                             />
                         </div>
                         <div className="loan-term">
@@ -67,11 +68,15 @@ class Homepage extends Component{
         );
     }
 };
+const mapStateToProps = (state) => {
+    return {
+        state: state
+    }
+}
 const mapDispatchToProps = dispatch => {
     return {
         changePrincipal: principal => dispatch(changePrincipal(principal))
     };
 };
-const Home = connect(null, mapDispatchToProps)(Homepage);
-export default Home;
 
+export default connect(null, mapStateToProps, mapDispatchToProps)(Homepage);
