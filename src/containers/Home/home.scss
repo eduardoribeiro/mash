@@ -1,0 +1,64 @@
+.home-page {
+    // background: #12c2e9;  /* fallback for old browsers */
+    // background: -webkit-linear-gradient(to right, #64d7da, #14c378, #00a0a0);  /* Chrome 10-25, Safari 5.1-6 */
+    // background: linear-gradient(to right, #64d7da, #14c378, #00a0a0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    h2 {
+      font-size: 1.5em;
+    }
+    
+    section {
+      margin: 3em auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-items: center;
+      justify-content: center;
+  
+      &:first-child {
+        margin-top: 0;
+      }
+  
+      &.centered {
+        text-align: center;
+      }
+    }
+  
+    .calculator-interface{
+      width: 85%;
+      border-radius: 4px;
+      box-shadow: 0 10px 40px 0 rgba(#14c378,.07), 0 2px 9px 0 rgba(#00a0a0,.06);
+      transition: transform .2s ease-in-out,box-shadow .2s ease-in-out;
+      will-change: transform,box-shadow;
+  
+      h2{
+        padding: 1em;
+        margin: 0;
+        flex-grow: 1;
+        font-weight: 300;
+        font-size: 2.5em;
+      }
+      .inner-title{
+        font-size: .6em;
+        text-transform: uppercase;
+        font-weight: 500;
+  
+        
+      }
+      .loan{
+        &-amount{
+          padding: 0 2em;
+          margin: 2em 0;
+  
+          h2{
+            padding: 0;
+          }
+        }
+  
+        &-term{
+          padding: 0 2em;
+          margin: 2em 0;
+        }
+      }
+    }
+}
