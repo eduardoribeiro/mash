@@ -1,4 +1,4 @@
-import { CHANGE_PRINCIPAL, UPDATE_LOAN_TERMS } from "../constants/action-types";
+import { CHANGE_PRINCIPAL, UPDATE_LOAN_TERMS, UPDATE_PAYMENTS } from "../constants/action-types";
 
 export const changePrincipal = principal => (dispatch, getState) => {
     const currentPrincipal = getState().principal;
@@ -15,10 +15,14 @@ export const changePrincipal = principal => (dispatch, getState) => {
 export const updateLoanTerms = loanterms => (); */
 
 function calculateMonthlyRate(p, i, m) {
-    if (m < 12) {
-      return ((p * i) * (Math.pow(1 + i, (m / 12)))) / (Math.pow(1 + i, (m / 12)) - 1);
-    }
-    return ((p * i) * (Math.pow(1 + i, (m / 12)))) / (Math.pow(1 + i, (m / 12)) - 1);
+  let months = Number(m*12);
+  const interestRate = Number(p * i);
+  const exponent = Number(1+i);
+    /* if (m < 12) {
+      return (interestRate * (Math.pow(exponent, months)) / ((Math.pow(exponent, months) - 1)));
+    } */
+    return (interestRate * (Math.pow(exponent, months)) / ((Math.pow(exponent, months) - 1)));
+    //return ((p * i) * (Math.pow(1 + i, months))) / (Math.pow(1 + i, (m / 12)) - 1);
 };
   
 export const calculateInterest = value => dispatch => {
@@ -39,9 +43,10 @@ export const calculateInterest = value => dispatch => {
       type: UPDATE_LOAN_TERMS,
       loanterms: payload
     });
+
+    dispatch(demonstrateInterest(P));
 }
-  
-  export function demonstrateInterest(value) {
+  export const demonstrateInterest = value => dispatch => {
     const P = Number(value); // principle / initial amount borrowed
     const I = ((6 * 360) / 365) / 100 / 12; // monthly interest rate 6%
     const monthlyPayment = I === 0 ? P / 2 / 12 : ((P * I) / (1 - Math.pow(1 / (1 + I), 2 * 12)));
@@ -50,10 +55,10 @@ export const calculateInterest = value => dispatch => {
     let balance = P;
     let baseline = P;
     let payments = [{ overpayment: 0, balance, baseline }];
-    let partial;
+    let partial = [];
   
   
-    for (let year = 0; year < 2; year++) {
+    for (let year = 1; year < 2; year++) {
       let interestYearly = 0;
       let overpaymentYearly = 0;
       for (let month = 1; month <= 12; month++) {
@@ -71,6 +76,13 @@ export const calculateInterest = value => dispatch => {
             partial = month;
           }
         }
+        partial.push({
+          month: month,
+          value: monthlyPayment,
+          interest:interestMonth,
+          balance,
+          baseline
+        })
       }
   
       payments.push({
@@ -78,5 +90,9 @@ export const calculateInterest = value => dispatch => {
       });
       if (partial) partial = 0;
     }
-    return { monthlyPayment: monthlyPayment.toFixed(2), payments };
+    dispatch({
+      type: UPDATE_PAYMENTS,
+      monthlyPayment: monthlyPayment.toFixed(2), 
+      payments 
+    });
   }  

@@ -17,10 +17,20 @@
         h4{
             text-transform: uppercase;
             font-size: .8rem;
+            color: #00a0a0;
+            font-weight: 700;
         }
 
         .cents{
             font-size: 0.6em;
+        }
+
+        &.disabled{
+            background: transparent;
+            color: #ccc;
+            h4{
+                color: #ccc;
+            }
         }
     }
 }

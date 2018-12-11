@@ -1,8 +1,9 @@
-import { ADD_ARTICLE, CHANGE_PRINCIPAL, UPDATE_LOAN_TERMS } from "../constants/action-types";
+import { ADD_ARTICLE, CHANGE_PRINCIPAL, UPDATE_LOAN_TERMS, UPDATE_PAYMENTS } from "../constants/action-types";
 
 const initialState = {
     principal: 1000,
-    loanterms: []
+    loanterms: [],
+    payments: []
   };
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -17,6 +18,11 @@ const rootReducer = (state = initialState, action) => {
         return {
           ...state,
           loanterms: [...action.loanterms]
+        };
+    case UPDATE_PAYMENTS:
+        return {
+          ...state,
+          payments: [...action.payments]
         };
     default:
         return state;

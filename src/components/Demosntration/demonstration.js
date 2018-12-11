@@ -1,10 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import './loanTerms.scss';
 
-const LoanTermsList = ({ loanterms }) => (
+const DemonstrationList = ({ payments }) => (
   <ul className="list-group list-group-flush">
-    {loanterms.map(
+    {/* {loanterms.map(
       loanterm => {
         let value = loanterm.value.split('.');
         let name = loanterm.name.split(' ');
@@ -18,11 +17,11 @@ const LoanTermsList = ({ loanterms }) => (
           </li>
         );
       }
-    )}
+    )} */}
   </ul>
 );
 const mapStateToProps = state => {
-  return { loanterms: state.loanterms };
+  return { payments: state.payments };
 };
-const Loanterm = connect(mapStateToProps)(LoanTermsList);
-export default Loanterm;
+const Demonstration = connect(mapStateToProps)(DemonstrationList);
+export default Demonstration;

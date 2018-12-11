@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { changePrincipal, calculateInterest } from "../../actions/index";
 import Slider from 'react-rangeslider';
 import Loanterm from '../../components/LoanTerms/LoanTerms';
+import Demonstration from '../../components/Demosntration/demonstration';
 import 'react-rangeslider/lib/index.css';
 import './home.scss';
 
@@ -32,32 +33,35 @@ class Homepage extends Component {
                     </header>
                     <section className="calculator">
                         <div className="calculator-interface">
-                        <h2>Simulate your loan</h2>
-                        <div className="loan-amount">
-                            <h2 className="amout">{`€ ${principal}`}</h2>
-                            <h3 className="inner-title">Amount required</h3>
-                            <Slider
-                                min={values.min}
-                                max={values.max}
-                                step={values.step}
-                                value={principal}
-                                onChange={this.onChangePrincipal()}
-                            />
-                            {/* <input
-                                type="range"
-                                min={values.min}
-                                max={values.max}
-                                step={values.step}
-                                value={principal}
-                                onChange={this.onChangePrincipal()}
-                            /> */}
+                            <h2>Simulate your loan</h2>
+                            <div className="loan-amount">
+                                <h2 className="amout">{`€ ${principal}`}</h2>
+                                <h3 className="inner-title">Amount required</h3>
+                                <Slider
+                                    min={values.min}
+                                    max={values.max}
+                                    step={values.step}
+                                    value={principal}
+                                    onChange={this.onChangePrincipal()}
+                                />
+                                {/* <input
+                                    type="range"
+                                    min={values.min}
+                                    max={values.max}
+                                    step={values.step}
+                                    value={principal}
+                                    onChange={this.onChangePrincipal()}
+                                /> */}
+                            </div>
+                            <div className="loan-term">
+                                <h3 className="inner-title">The following terms are available</h3>
+                                {/* <LoanTerms amount={principal} /> */}
+                                <Loanterm {...loanterms} />
+                            </div>
                         </div>
-                        <div className="loan-term">
-                            <h3 className="inner-title">The following terms are available</h3>
-                            {/* <LoanTerms amount={principal} /> */}
-                            <Loanterm {...loanterms} />
-                        </div>
-                        </div>
+                    </section>
+                    <section id="demonstration">
+                        <Demonstration {...payments} />
                     </section>
                 </div>
             </article>   
