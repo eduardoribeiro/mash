@@ -5,9 +5,10 @@ const mapStateToProps = state => {
 };
 const ConnectedList = ({ loan }) => (
   <ul className="list-group list-group-flush">
-    {loan.map(el => (
-      <li className="list-group-item" key={el.id}>
-        {el.title}
+    {loan.map(loanterm => (
+      <li className="list-group-item" key={loanterm.name}>
+        <h4>{loanterm.name}</h4>
+        {loanterm.value}
       </li>
     ))}
   </ul>
