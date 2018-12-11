@@ -2,7 +2,14 @@
     // background: #12c2e9;  /* fallback for old browsers */
     // background: -webkit-linear-gradient(to right, #64d7da, #14c378, #00a0a0);  /* Chrome 10-25, Safari 5.1-6 */
     // background: linear-gradient(to right, #64d7da, #14c378, #00a0a0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    
+    header{
+      text-align: center;
+      padding: 15% 0 0;
+
+      .logo{
+        max-width: 180px;
+      }
+    }
     h2 {
       font-size: 1.5em;
     }
@@ -27,6 +34,8 @@
     .calculator-interface{
       width: 85%;
       border-radius: 4px;
+      background-color: #f6f6f6;
+      background-image: linear-gradient(to bottom, #f6f6f6 0%, #e9e9e9 74%);
       box-shadow: 0 10px 40px 0 rgba(#14c378,.07), 0 2px 9px 0 rgba(#00a0a0,.06);
       transition: transform .2s ease-in-out,box-shadow .2s ease-in-out;
       will-change: transform,box-shadow;
@@ -37,21 +46,24 @@
         flex-grow: 1;
         font-weight: 300;
         font-size: 2.5em;
+        text-align: center;
       }
       .inner-title{
-        font-size: .6em;
+        color: #00a0a0;
+        font-size: .7em;
         text-transform: uppercase;
-        font-weight: 500;
-  
-        
+        font-weight: 700;
+        text-align: right;
       }
       .loan{
         &-amount{
           padding: 0 2em;
           margin: 2em 0;
+          text-align: right;
   
           h2{
             padding: 0;
+            text-align: right;
           }
         }
   
@@ -59,6 +71,13 @@
           padding: 0 2em;
           margin: 2em 0;
         }
+      }
+    }
+
+    .rangeslider-horizontal{
+      .rangeslider__fill{
+        background-color: transparent;
+        background: linear-gradient(to right, #64d7da 0%,#14c378 50%,#00a0a0 100%);
       }
     }
 }

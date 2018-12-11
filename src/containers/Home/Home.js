@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changePrincipal } from "../../actions/index";
+import { changePrincipal, calculateInterest } from "../../actions/index";
 import Slider from 'react-rangeslider';
+import Loanterm from '../../components/LoanTerms/LoanTerms';
 import 'react-rangeslider/lib/index.css';
-/* import 'home.scss'; */
+import './home.scss';
 
-class Homepage extends Component{
+class Homepage extends Component {
+    componentWillMount() {
+        this.props.dispatch(calculateInterest(this.props.principal))
+    }
+
+    onChangePrincipal() {
+        const self = this;
+        // let principal = event.target.value;
+        return principal => self.props.dispatch(changePrincipal(principal));
+    }
 
     render(){
-        const { principal, changePrincipal } = this.props;
+        const { principal, loanterms } = this.props;
         const values = {
           min: 100,
           max: 2000,
@@ -17,10 +27,9 @@ class Homepage extends Component{
         return (
             <article>
                 <div className="home-page">
-                    <section className="centered">
-                        <h2>Need a loan?</h2>
-                        <p>Simple estimate your loan interests and total amount due</p>
-                    </section>
+                    <header>
+                        <img className="logo" src="https://www.mash.com/-/media/images/mash/footer-logo.ashx?h=26&la=fi-FI&w=96&hash=9E88816D88508CB49081C001CF44E8F81494BA29" alt=""/>
+                    </header>
                     <section className="calculator">
                         <div className="calculator-interface">
                         <h2>Simulate your loan</h2>
@@ -32,12 +41,21 @@ class Homepage extends Component{
                                 max={values.max}
                                 step={values.step}
                                 value={principal}
-                                onChange={changePrincipal}
+                                onChange={this.onChangePrincipal()}
                             />
+                            {/* <input
+                                type="range"
+                                min={values.min}
+                                max={values.max}
+                                step={values.step}
+                                value={principal}
+                                onChange={this.onChangePrincipal()}
+                            /> */}
                         </div>
                         <div className="loan-term">
                             <h3 className="inner-title">The following terms are available</h3>
                             {/* <LoanTerms amount={principal} /> */}
+                            <Loanterm {...loanterms} />
                         </div>
                         </div>
                     </section>
@@ -54,12 +72,13 @@ const mapStateToProps = state => {
 }
 
 
-const mapDispatchToProps = dispatch => {
+/* const mapDispatchToProps = dispatch => {
     return {
-        changePrincipal: (value) => {
-            dispatch(changePrincipal(value))
+        changePrincipal: (event) => {
+            let principal = event.target.value;
+            // dispatch(changePrincipal(principal));
         }
     }
-};
+}; */
 
-export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
+export default connect(mapStateToProps)(Homepage);

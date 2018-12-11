@@ -29,7 +29,6 @@ module.exports = {
         include: /node_modules/,
         use: ['style-loader', 'css-loader'],
       },
-      ,
       {
         test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
         use: 'file-loader',
@@ -59,20 +58,7 @@ module.exports = {
             },
           },
         ],
-      },
-      {
-        test: /\.html$/,
-        use: 'html-loader'
-      },
-      {
-        test: /\.(mp4|webm)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000
-          },
-        },
-      },
+      }
     ]
   },
   plugins: [

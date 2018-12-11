@@ -1,7 +1,7 @@
 import { ADD_ARTICLE, CHANGE_PRINCIPAL, UPDATE_LOAN_TERMS } from "../constants/action-types";
 
 const initialState = {
-    principal: 100,
+    principal: 1000,
     loanterms: []
   };
 const rootReducer = (state = initialState, action) => {
@@ -9,15 +9,15 @@ const rootReducer = (state = initialState, action) => {
    /*  case ADD_ARTICLE:
         return { ...state, loanterms: [...state.articles, action.payload]}; */
     case CHANGE_PRINCIPAL:
-      return Object.assign({}, ...state, {
-            ...state,
-            principal: action.payload
-        });
+      return {
+        ...state,
+        principal: action.payload
+      };
     case UPDATE_LOAN_TERMS:
-        return Object.assign({}, ...state, {
+        return {
           ...state,
-          loanterms: [...state.loanterms, action.payload]
-      });
+          loanterms: [...action.loanterms]
+        };
     default:
         return state;
   }

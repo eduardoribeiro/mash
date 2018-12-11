@@ -1,19 +1,18 @@
-import { ADD_ARTICLE, CHANGE_PRINCIPAL, UPDATE_LOAN_TERMS } from "../constants/action-types";
+import { CHANGE_PRINCIPAL, UPDATE_LOAN_TERMS } from "../constants/action-types";
 
-export const addArticle = article => ({ 
-    type: ADD_ARTICLE, 
-    payload: article 
-});
+export const changePrincipal = principal => (dispatch, getState) => {
+    const currentPrincipal = getState().principal;
+    if(principal !== currentPrincipal){
+      dispatch({
+        type: CHANGE_PRINCIPAL,
+        payload: principal
+      });
 
-export const changePrincipal = principal => ({
-    type: CHANGE_PRINCIPAL,
-    payload: principal
-});
-
-export const updateLoanTerms = loanterms => ({
-    type: UPDATE_LOAN_TERMS,
-    payload: loanterms
-});
+      dispatch(calculateInterest(principal));
+    }
+};
+/* 
+export const updateLoanTerms = loanterms => (); */
 
 function calculateMonthlyRate(p, i, m) {
     if (m < 12) {
@@ -22,21 +21,24 @@ function calculateMonthlyRate(p, i, m) {
     return ((p * i) * (Math.pow(1 + i, (m / 12)))) / (Math.pow(1 + i, (m / 12)) - 1);
 };
   
-export function calculateInterest(value) {
+export const calculateInterest = value => dispatch => {
     const P = Number(value); // principle / initial amount borrowed
     const I = ((6 * 360) / 365) / 100 / 12; // monthly interest rate 6%
     const months = [6, 12, 24];
     let payload = [];
     for (let i = 0; i < months.length; i++) {
         let name = months[i]+' Months';
-        let value = calculateMonthlyRate(P, I, months[i]);
+        let value = calculateMonthlyRate(P, I, months[i]).toFixed(2);
         payload.push({
             name,
             value
         });
     }
 
-    return payload;
+    dispatch({
+      type: UPDATE_LOAN_TERMS,
+      loanterms: payload
+    });
 }
   
   export function demonstrateInterest(value) {
