@@ -1,24 +1,18 @@
 .list-group{
-    flex-direction: row;
     width: 100%;
 
     &-item{
         background: transparent;
-        border: none;
-        border-right: 1px solid #ccc !important;
-        width: 33%;
         text-align: center;
         font-size: 2em;
-
-        &:last-child{
-            border-right: none !important;
-        }
+        transition: color .2s ease-in-out;
 
         h4{
             text-transform: uppercase;
             font-size: .8rem;
             color: #00a0a0;
             font-weight: 700;
+            transition: color .2s ease-in-out;
         }
 
         .cents{

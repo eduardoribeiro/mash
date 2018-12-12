@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changePrincipal, calculateInterest } from "../../actions/index";
+import { changePrincipal, calculateLoan } from "../../actions/index";
 import Slider from 'react-rangeslider';
 import Loanterm from '../../components/LoanTerms/LoanTerms';
 import Demonstration from '../../components/Demosntration/demonstration';
@@ -9,7 +9,7 @@ import './home.scss';
 
 class Homepage extends Component {
     componentWillMount() {
-        this.props.dispatch(calculateInterest(this.props.principal))
+        this.props.dispatch(calculateLoan(this.props.principal))
     }
 
     onChangePrincipal() {
@@ -55,14 +55,15 @@ class Homepage extends Component {
                             </div>
                             <div className="loan-term">
                                 <h3 className="inner-title">The following terms are available</h3>
-                                {/* <LoanTerms amount={principal} /> */}
                                 <Loanterm {...loanterms} />
                             </div>
                         </div>
                     </section>
+                    {/*
                     <section id="demonstration">
                         <Demonstration {...payments} />
                     </section>
+                    */}
                 </div>
             </article>   
         );
