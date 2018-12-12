@@ -1,17 +1,5 @@
 import { CHANGE_PRINCIPAL, UPDATE_LOAN_TERMS, UPDATE_PAYMENTS } from "../constants/action-types";
 
-export const changePrincipal = principal => (dispatch, getState) => {
-    const currentPrincipal = getState().principal;
-    if(principal !== currentPrincipal){
-      dispatch({
-        type: CHANGE_PRINCIPAL,
-        payload: principal
-      });
-
-      dispatch(calculateLoan(principal));
-    }
-};
-
 function calculateMonthlyInterest(rate, nper, pv, fv, type) {
   if (!fv) fv = 0;
   if (!type) type = 0;
@@ -27,8 +15,20 @@ function calculateMonthlyInterest(rate, nper, pv, fv, type) {
 
   return pmt;
 }
-/* 
-export const updateLoanTerms = loanterms => (); */
+
+
+export const changePrincipal = principal => (dispatch, getState) => {
+    const currentPrincipal = getState().principal;
+    if(principal !== currentPrincipal){
+      dispatch({
+        type: CHANGE_PRINCIPAL,
+        payload: principal
+      });
+
+      dispatch(calculateLoan(principal));
+    }
+};
+
 export const calculateLoan = amount => dispatch => {
   const periods = [3, 6, 12, 24, 36, 48, 60, 72, 88, 120];
   const rate = 6 * 360 / 365 / 12 / 100; // Retrun the calculated interest
@@ -53,7 +53,7 @@ export const calculateLoan = amount => dispatch => {
   // dispatch(demonstrateInterest(P));
 }
   
-export const calculateInterest = value => dispatch => {
+/* export const calculateInterest = value => dispatch => {
     const P = Number(value); // principle / initial amount borrowed
     const I = ((6 * 360) / 365) / 100 / 12; // monthly interest rate 6%
     const months = [6, 12, 24];
@@ -73,46 +73,44 @@ export const calculateInterest = value => dispatch => {
     });
 
     dispatch(demonstrateInterest(P));
-};
+}; */
 
-export const demonstrateInterest = value => dispatch => {
-  for (let index = 0; index < array.length; index++) {
-    const element = array[index];
-    
-  }
-  const periods = [6, 12, 24, 36, 48, 60, 72, 88, 120];
-  const P = Number(value); // principle / initial amount borrowed
-  const I = ((6 * 360) / 365) / 100 / 12; // monthly interest rate 6%
-  let payments = [];
-  
-  for (let i = 0; i < periods.length; i++) {
-    const term = periods[i]; //6, 12 or 24
-    let monthFormula = periods[i]*12; // calculates the exponent
-    let loanWithInterest = P * I; // Gets the value plus teh interest rate
-    let monthlyPayment = (loanWithInterest / (1 - Math.pow(1 / (1 + I), monthFormula)));
-    let balance = loanWithInterest;
-    let terms = {
-      term: term + ' Months',
-      monthlyPayments: []
-    };
-    for (let month = 1; month < term; month++) {
-      const interestMonth = balance * I;
-      balance -= monthlyPayment + interestMonth;
-      terms.monthlyPayments.push({
-        month,
-        balance,
-        installment: monthlyPayment,
-        interest: interestMonth
-      });
-      
+export const demonstrateInterest = (amount, months, installment) => dispatch => {
+  let demonstration = [];
+  let interest;
+  let rate;
+  let object = months+' Months';
+  for (let mes = 1; mes < months+1; mes++) {
+
+    if(mes !== 1){
+      amount = amount - (installment - interest);
     }
-    payments.push(terms);
+    /* rate = 6 * 360 / 365 / 12 / 100; */
+    interest = amount * 6 / 365 * 30 / 100;
+    
+    if(mes === months && amount < installment){
+      installment = amount + interest;
+      installment = installment.toFixed(2);
+    }
+
+    demonstration.push({
+      month: mes,
+      amount: amount,
+      interest: Number(interest.toFixed(4)),
+      installment
+    });
   }
-  /* 
-  
-  
-  
-  
+
+  let payment = [{
+    ['months_'+months]: demonstration
+  }];
+
+  dispatch({
+    type: UPDATE_PAYMENTS,
+    payments: payment
+  });
+}
+  /*   
   const monthlyPayment = I === 0 ? P / 2 / 12 : ((P * I) / (1 - Math.pow(1 / (1 + I), 2 * 12)));
   const monthlyOverpayment = 0;
   const overpayments = [];
@@ -153,10 +151,11 @@ export const demonstrateInterest = value => dispatch => {
       baseline, interestYearly, balance, partial, overpayment: overpaymentYearly + (+monthlyOverpayment * (partial || 12))
     });
     if (partial) partial = 0;
-  } */
+  }
   dispatch({
     type: UPDATE_PAYMENTS,
     monthlyPayment: monthlyPayment.toFixed(2), 
     payments 
   });
 }  
+*/

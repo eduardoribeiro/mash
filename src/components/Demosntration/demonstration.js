@@ -1,23 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const DemonstrationList = ({ payments }) => (
+const DemonstrationList = ({ payments}) => (
   <ul className="list-group list-group-flush">
-    {/* {loanterms.map(
-      loanterm => {
-        let value = loanterm.value.split('.');
-        let name = loanterm.name.split(' ');
-        let valueHTML = loanterm.value > 5 ? <div className="value">
-                <span className="money">€ {value[0]},</span><sup className="cents">{value[1]}</sup>
-              </div> : <div className="value"> -- </div>;
+    <li className="list-group-item">
+      <div className="month">Month</div>
+      <div className="capital">Capital</div>
+      <div className="interest">Interest</div>
+      <div className="installment">Installment</div>
+    </li>
+    {payments.map(
+      payment => {
         return(
-          <li className={'list-group-item ' + (loanterm.value <= 5 ? 'disabled' : '')} key={name}>
+          <li className={'list-group-item '} key={payment.month}>
+            <div className="month">{payment.month}</div>
+            <div className="capital">{payment.amount}</div>
+            <div className="interest">{payment.interest}</div>
+            <div className="installment">{payment.installment}</div>
             <h4 className={`${name[1].toLowerCase()}-${name[0]}`}>{`${name[0]} ${name[1]}`}</h4>
             {valueHTML}
           </li>
         );
       }
-    )} */}
+    )}
   </ul>
 );
 const mapStateToProps = state => {
