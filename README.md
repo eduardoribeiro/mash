@@ -6,11 +6,6 @@
 ![](https://img.shields.io/badge/node-%3E%3D%208.0.0-brightgreen.svg)
 
 
-**Table of Contents**
-
-[TOCM]
-
-
 Requirements
 =============
 In order to run this exercise one needs to do the following steps:
