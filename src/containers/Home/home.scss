@@ -39,6 +39,7 @@
       box-shadow: 0 10px 40px 0 rgba(#14c378,.07), 0 2px 9px 0 rgba(#00a0a0,.06);
       transition: transform .2s ease-in-out,box-shadow .2s ease-in-out;
       will-change: transform,box-shadow;
+      transition: all .2s ease-in-out;
   
       h2{
         padding: 1em;
@@ -71,6 +72,10 @@
           padding: 0 2em;
           margin: 2em 0;
         }
+      }
+
+      @media (max-width: 520px) {
+        width: 95%;
       }
     }
 

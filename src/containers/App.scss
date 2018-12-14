@@ -4,5 +4,10 @@
     display: flex;
     min-height: 100%;
     padding: 0 16px;
+    padding: 0 16px;
     flex-direction: column;
+
+    @media (max-width: 520px){
+        padding: 0 8px;
+    }
 }

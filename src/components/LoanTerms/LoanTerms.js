@@ -1,16 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { UPDATE_PAYMENTS } from '../../constants/action-types';
-import { demonstrateInterest } from '../../actions/index';
+import { demonstrateInterest, openDemonstration, closeDemonstration } from '../../actions/index';
 import './loanTerms.scss';
 import Demonstration from "../Demosntration/demonstration";
 
 class LoanTerm extends Component {
 
   displayDemonstration(amount, months, installment) {
-    console.log('Clicked the '+months+' months button');
     const self = this;
-    self.props.dispatch(demonstrateInterest(amount, Number(months), installment));
+    const { showPayments, openElement } = this.props;
+    if(!showPayments && openElement !== 'months_'+months || showPayments && openElement !== 'months_'+months ){
+      self.props.dispatch(demonstrateInterest(amount, Number(months), installment));
+    } else if(!showPayments && openElement === 'months_'+months){ 
+      self.props.dispatch(openDemonstration());
+    } else {
+      self.props.dispatch(closeDemonstration());
+    }
   }
 
   DemonstrationLayer(month) {
@@ -33,7 +38,7 @@ class LoanTerm extends Component {
   }
 
   render(){
-    const { principal, loanterms, payments } = this.props;
+    const { principal, loanterms, payments, showPayments, openElement } = this.props;
     return(
       <ul className="list-group list-group-flush">
         {loanterms.map( loanterm => {
@@ -46,15 +51,20 @@ class LoanTerm extends Component {
                   </div> : <div className="value"> -- </div>;
             return(
               <li className={'list-group-item ' + (parseFloat(loanterm.installment) <= 5 ? 'hidden' : '')} key={name}>
-                <h4 className={`${name[1].toLowerCase()}-${name[0]}`}>{`${name[0]} ${name[1]}`}</h4>
-                {valueHTML}
-                <button className="btn load-loan" onClick={() => { this.displayDemonstration(principal, name[0], loanterm.installment) }}>
-                {/* <button className="btn load-loan"> */}
-                  <i className="fas fa-chevron-down"></i>
-                </button>
-                <div className={'demonstration'} key={name}>
-                  <Demonstration data={this.getPaymentsPerMonth(payments, object)} />
+                <div className="loanterm-item">
+                  <h4 className={`${name[1].toLowerCase()}-${name[0]}`}>{`${name[0]} ${name[1]}`}</h4>
+                  {valueHTML}
+                  <button className="btn load-loan" onClick={() => { this.displayDemonstration(principal, name[0], loanterm.installment) }}>
+                    {showPayments && openElement === object ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i>}
+                  </button>
                 </div>
+                {
+                  showPayments && openElement === object
+                  ? <div className={'demonstration'} key={openElement}>
+                      <Demonstration data={payments} month={object} />
+                    </div>
+                  : null
+                }
               </li>
             );
         })}
@@ -63,35 +73,12 @@ class LoanTerm extends Component {
   }
 };
 
-/* const LoanTermsList = ({ loanterms }) => (
-  <ul className="list-group list-group-flush">
-    {loanterms.map(
-      loanterm => {
-        let value = loanterm.installment.toString();
-          value = value.split('.');
-        let name = loanterm.name.split(' ');
-        let valueHTML = parseFloat(loanterm.installment) > 5 ? <div className="value">
-                <span className="money">€ {value[0]},</span><sup className="cents">{value[1]}</sup>
-              </div> : <div className="value"> -- </div>;
-        return(
-          <li className={'list-group-item ' + (parseFloat(loanterm.installment) <= 5 ? 'hidden' : '')} key={name}>
-            <h4 className={`${name[1].toLowerCase()}-${name[0]}`}>{`${name[0]} ${name[1]}`}</h4>
-            {valueHTML}
-            <button className="btn load-loan" onClick={displayDemonstration(name[0], loanterm.installment)}>
-              <i className="fas fa-chevron-down"></i>
-            </button>
-            <div className={'demonstration'} key={name}>
-            </div>
-          </li>
-        );
-      }
-    )}
-  </ul>
-); */
 const mapStateToProps = state => {
   return { 
     principal: state.principal,
     loanterms: state.loanterms,
+    showPayments: state.showPayments,
+    openElement: state.openElement,
     payments: state.payments
   };
 };

@@ -3,13 +3,12 @@ import { connect } from "react-redux";
 import { changePrincipal, calculateLoan } from "../../actions/index";
 import Slider from 'react-rangeslider';
 import Loanterm from '../../components/LoanTerms/LoanTerms';
-import Demonstration from '../../components/Demosntration/demonstration';
 import 'react-rangeslider/lib/index.css';
 import './home.scss';
 
 class Homepage extends Component {
     componentWillMount() {
-        this.props.dispatch(calculateLoan(this.props.principal))
+        this.props.dispatch(calculateLoan(this.props.principal));
     }
 
     onChangePrincipal() {
@@ -44,14 +43,6 @@ class Homepage extends Component {
                                     value={principal}
                                     onChange={this.onChangePrincipal()}
                                 />
-                                {/* <input
-                                    type="range"
-                                    min={values.min}
-                                    max={values.max}
-                                    step={values.step}
-                                    value={principal}
-                                    onChange={this.onChangePrincipal()}
-                                /> */}
                             </div>
                             <div className="loan-term">
                                 <h3 className="inner-title">The following terms are available</h3>
@@ -59,11 +50,6 @@ class Homepage extends Component {
                             </div>
                         </div>
                     </section>
-                    {/*
-                    <section id="demonstration">
-                        <Demonstration {...payments} />
-                    </section>
-                    */}
                 </div>
             </article>   
         );
@@ -75,15 +61,5 @@ const mapStateToProps = state => {
         principal: state.principal
     }
 }
-
-
-/* const mapDispatchToProps = dispatch => {
-    return {
-        changePrincipal: (event) => {
-            let principal = event.target.value;
-            // dispatch(changePrincipal(principal));
-        }
-    }
-}; */
 
 export default connect(mapStateToProps)(Homepage);

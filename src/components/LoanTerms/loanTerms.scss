@@ -2,65 +2,78 @@
     width: 100%;
 
     &-item{
-        display: flex;
-        background: transparent;
+        background: rgba(#64D7DB, 0.05);
         text-align: center;
         font-size: 2em;
         transition: color .2s ease-in-out;
         align-items: center;
+        padding: 0;
+        border: 0;
 
-        h4{
-            text-transform: uppercase;
-            font-size: .8rem;
-            color: #00a0a0;
-            font-weight: 700;
-            transition: color .2s ease-in-out;
-            justify-self: flex-start;
-            margin-bottom: 0;
-            width: 35%;
-            text-align: left;
-        }
+        .loanterm-item{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: .75rem 1.25rem;
+            background: #fff;
 
-        .value{
-            justify-self: flex-end;
-            width: 55%;
-            text-align: right;
-        }
-
-        .cents{
-            font-size: 0.6em;
-        }
-
-        &.disabled{
-            background: transparent;
-            color: #ccc;
             h4{
-                color: #ccc;
-            }
-        }
-
-        .load-loan{
-            margin-left: 5%;
-            justify-self: flex-end;
-            border: none;
-            background: transparent;
-            width: 30px;
-            height: 30px;
-            border-radius: 30px;
-            line-height: 33px;
-            padding: 0;
-            transition: all .2s ease-in-out;
-
-            .fas{
+                text-transform: uppercase;
+                font-size: .8rem;
                 color: #00a0a0;
+                font-weight: 700;
+                transition: color .2s ease-in-out;
+                justify-self: flex-start;
+                margin-bottom: 0;
+                width: 35%;
+                text-align: left;
+            }
+    
+            .value{
+                justify-self: flex-end;
+                width: 55%;
+                text-align: right;
+            }
+    
+            .cents{
+                font-size: 0.6em;
+            }
+    
+            &.disabled{
+                background: transparent;
+                color: #ccc;
+                h4{
+                    color: #ccc;
+                }
             }
 
-            &:hover{
-                background: #00a0a0;
+            .load-loan{
+                margin-left: 5%;
+                justify-self: flex-end;
+                border: none;
+                background: transparent;
+                width: 30px;
+                height: 30px;
+                border-radius: 30px;
+                line-height: 33px;
+                padding: 0;
+                transition: all .2s ease-in-out;
+    
                 .fas{
-                    color: #fff;
+                    color: #00a0a0;
+                }
+    
+                &:hover{
+                    background: #00a0a0;
+                    .fas{
+                        color: #fff;
+                    }
                 }
             }
         }
+
+        
+
+        
     }
 }
